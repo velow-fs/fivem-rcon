@@ -19,7 +19,7 @@ rcon.connect()
 bot.login(token);
 
 bot.on('message', (msg) => {
-  if (msg.content === '!restart') {
+  if (msg.content === '!revive') {
     if (msg.member.roles.cache.some(role => role.id === 'ROLE_ID')) {
       rcon.send(command)
         .then(response => console.log('Rcon Command Executed: ' + command))
