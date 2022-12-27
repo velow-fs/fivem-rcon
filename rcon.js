@@ -2,7 +2,7 @@ const { Rcon } = require("rcon-client");
 const Discord = require('discord.js');
 const bot = new Discord.Client();
 
-const command = "revive";
+const command = "revive"; // You can obviously add more :)
 
 const token = "YOUR_TOKEN_HERE";
 
@@ -19,7 +19,7 @@ rcon.connect()
 bot.login(token);
 
 bot.on('message', (msg) => {
-  if (msg.content === '!revive') {
+  if (msg.content === '!revive') { // Add them here aswell or just copy/paste Line 21-32 and edit '!revive' with your new commands :)
     if (msg.member.roles.cache.some(role => role.id === 'ROLE_ID')) {
       rcon.send(command)
         .then(response => console.log('Rcon Command Executed: ' + command))
