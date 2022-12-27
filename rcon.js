@@ -8,7 +8,7 @@ const token = "YOUR_TOKEN_HERE";
 
 const rcon = new Rcon({
     host: "127.0.0.1",
-    port: "27015",
+    port: "30120",
     password: "YOUR_PASSWORD_HERE"
 });
 
