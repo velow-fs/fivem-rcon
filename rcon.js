@@ -1,31 +1,34 @@
-const { Rcon } = require("rcon-client");
 const Discord = require('discord.js');
+const Rcon = require('rcon');
+
 const bot = new Discord.Client();
 
-const command = "revive"; // You can obviously add more :)
+const config = {
+  host: '127.0.0.1',
+  port: 30120,
+  password: 'rcon_password_here'
+}
 
-const token = "YOUR_TOKEN_HERE";
+const rcon = new Rcon(config.host, config.port, config.password);
 
-const rcon = new Rcon({
-    host: "127.0.0.1",
-    port: "30120",
-    password: "YOUR_PASSWORD_HERE"
+const prefix = '!';
+
+bot.on('ready', () => {
+  console.log('Ready!');
 });
 
-rcon.connect()
-    .then(() => console.log('RCON connected'))
-    .catch(err => console.log('RCON error', err));
+bot.on('message', message => {
+  if (!message.content.startsWith(prefix)) return;
 
-bot.login(token);
+  const command = message.content.slice(prefix.length);
 
-bot.on('message', (msg) => {
-  if (msg.content === '!revive') { // Add them here aswell or just copy/paste Line 21-32 and edit '!revive' with your new commands :)
-    if (msg.member.roles.cache.some(role => role.id === 'ROLE_ID')) {
-      rcon.send(command)
-        .then(response => console.log('Rcon Command Executed: ' + command))
-        .catch(err => console.log('Rcon Error: ' + err));
-    } else {
-      msg.reply('You do not have permission to use this command.');
-    }
-  }
+  rcon.send(command)
+    .then(response => {
+      message.channel.send(response);
+    })
+    .catch(err => {
+      message.channel.send(err);
+    });
 });
+
+bot.login('discord_bot_token_here');
